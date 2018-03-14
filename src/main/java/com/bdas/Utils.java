@@ -7,4 +7,8 @@ public  class Utils{
         byte[] credentials = (username + ':' + password).getBytes();
         return new String(Base64.encodeBase64(credentials));
     }
+
+    public static void print(Object text) {
+        System.out.println(text);
+    }
 }
