@@ -1,4 +1,4 @@
-package com.bdas.prj;
+package com.bdas.project;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
