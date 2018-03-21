@@ -1,5 +1,6 @@
 package com.bdas.workflow;
 
+import com.bdas.RestActions;
 import com.bdas.Utils;
 
 import java.io.*;
@@ -8,7 +9,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RemWorkflowSchemes {
+public class RemWorkflowSchemes implements RestActions{
     private String basicAuth, instance;
     private List<String> ids;
     private final static String path = "./workflow_scheme_ids.txt";
@@ -19,7 +20,8 @@ public class RemWorkflowSchemes {
         ids = new ArrayList<>();
     }
 
-    public void removeWorkflowSchemes() {
+    @Override
+    public void sendRequest() {
         loadIds(ids);
         Utils.print("Total items for removal: " + ids.size());
 

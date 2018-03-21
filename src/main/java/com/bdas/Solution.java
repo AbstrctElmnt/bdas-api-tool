@@ -71,7 +71,7 @@ public class Solution {
         } else if (args.length == 2 && args[1].equals("-rws")) {
 
             RemWorkflowSchemes rws = new RemWorkflowSchemes(Utils.encodeCredentials(username, password), instance);
-            rws.removeWorkflowSchemes();
+            rws.sendRequest();
 
         } else if (args.length == 3) {
 

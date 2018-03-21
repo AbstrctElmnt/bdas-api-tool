@@ -1,5 +1,6 @@
 package com.bdas.project;
 
+import com.bdas.RestActions;
 import com.bdas.Utils;
 
 import java.io.IOException;
@@ -7,7 +8,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class ProjectCreation implements RestActions{
+public class ProjectCreation implements RestActions {
     private String basicAuth, jiraProjectKey, jiraProjectName, lead, instance,templateId;
 
     public ProjectCreation(String basicAuth, String instance, String jiraProjectKey, String jiraProjectName, String lead, String templateId) {
