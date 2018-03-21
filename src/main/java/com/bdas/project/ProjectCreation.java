@@ -1,11 +1,13 @@
 package com.bdas.project;
 
+import com.bdas.Utils;
+
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class ProjectCreation {
+public class ProjectCreation implements RestActions{
     private String basicAuth, jiraProjectKey, jiraProjectName, lead, instance,templateId;
 
     public ProjectCreation(String basicAuth, String instance, String jiraProjectKey, String jiraProjectName, String lead, String templateId) {
@@ -17,7 +19,8 @@ public class ProjectCreation {
         this.templateId = templateId;
     }
 
-    public String createJiraProject() {
+    @Override
+    public void sendRequest() {
         String body = String.format("{\"key\": \"%s\",\"name\": \"%s\", \"lead\": \"%s\"}", jiraProjectKey.toUpperCase(), jiraProjectName, lead);
         String jiraUrl = String.format("%srest/project-templates/1.0/createshared/%s", instance, templateId);
         try {
@@ -34,6 +37,6 @@ public class ProjectCreation {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return String.format("Created: " + instance + "plugins/servlet/project-config/%s", jiraProjectKey);
+        Utils.print(String.format("Created: " + instance + "plugins/servlet/project-config/%s", jiraProjectKey));
     }
 }

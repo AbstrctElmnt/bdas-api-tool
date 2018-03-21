@@ -7,7 +7,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AddPrjGroups {
+public class AddPrjGroups implements RestActions {
     private String basicAuth, instance, project, jiraProjectKey;
     private static Map<Integer, String> bodyValues;
 
@@ -29,7 +29,8 @@ public class AddPrjGroups {
         this.jiraProjectKey = jiraProjectKey;
     }
 
-    public void add() throws IOException {
+    @Override
+    public void sendRequest() {
         bodyValues.forEach((id, role) -> {
             try {
                 String body = String.format("{\"group\" : [\"prj_%s-%s\"]}", project, role);
