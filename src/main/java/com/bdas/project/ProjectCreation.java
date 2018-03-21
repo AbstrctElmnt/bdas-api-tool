@@ -21,7 +21,7 @@ public class ProjectCreation implements RestActions{
 
     @Override
     public void sendRequest() {
-        String body = String.format("{\"key\": \"%s\",\"name\": \"%s\", \"lead\": \"%s\"}", jiraProjectKey.toUpperCase(), jiraProjectName, lead);
+        String body = String.format("{\"key\": \"%s\",\"name\": \"%s\", \"lead\": \"%s\"}", jiraProjectKey, jiraProjectName, lead);
         String jiraUrl = String.format("%srest/project-templates/1.0/createshared/%s", instance, templateId);
         try {
             URL url = new URL(jiraUrl);
