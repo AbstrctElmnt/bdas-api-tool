@@ -1,7 +1,5 @@
 package com.bdas.prj;
 
-import com.bdas.Utils;
-
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
@@ -10,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AddPrjGroups {
-    private String basicAuth, instance;
+    private String basicAuth, instance, project, jiraProjectKey;
     private static Map<Integer, String> bodyValues;
 
     static {
@@ -24,12 +22,14 @@ public class AddPrjGroups {
         bodyValues.put(10405, "users");
     }
 
-    public AddPrjGroups(String username, String password, String instance) {
+    public AddPrjGroups(String basicAuth, String instance, String project, String jiraProjectKey) {
+        this.basicAuth = basicAuth;
         this.instance = instance;
-        basicAuth = "Basic " + Utils.encodeCredentials(username, password);
+        this.project = project;
+        this.jiraProjectKey = jiraProjectKey;
     }
 
-    public void add(String jiraProjectKey, String project) throws IOException {
+    public void add() throws IOException {
         bodyValues.forEach((id, role) -> {
             try {
                 String body = String.format("{\"group\" : [\"prj_%s-%s\"]}", project, role);
