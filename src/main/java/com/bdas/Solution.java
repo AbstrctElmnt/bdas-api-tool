@@ -3,7 +3,7 @@ package com.bdas;
 import com.atlassian.jira.rest.client.api.JiraRestClient;
 import com.atlassian.jira.rest.client.auth.BasicHttpAuthenticationHandler;
 import com.atlassian.jira.rest.client.internal.async.AsynchronousJiraRestClientFactory;
-import com.bdas.project.AddPrjGroups;
+import com.bdas.project.PrjGroups;
 import com.bdas.project.ProjectCreation;
 import com.bdas.reports.CustomFieldsReport;
 import com.bdas.reports.IssueTypesReport;
@@ -77,7 +77,7 @@ public class Solution {
 
             String project = args[1].trim().toUpperCase();
             String jiraProjectKey = args[2].trim().toUpperCase();
-            AddPrjGroups addPrjGroups = new AddPrjGroups(Utils.encodeCredentials(username, password), instance, project, jiraProjectKey);
+            PrjGroups addPrjGroups = new PrjGroups(Utils.encodeCredentials(username, password), instance, project, jiraProjectKey);
             addPrjGroups.sendRequest();
 
         } else if (args.length == 6) {
@@ -93,7 +93,7 @@ public class Solution {
             projectCreation.sendRequest();
 
             Utils.print(String.format("Adding prj_%s groups...", project));
-            AddPrjGroups addPrjGroups = new AddPrjGroups(Utils.encodeCredentials(username, password), instance, project, jiraProjectKey);
+            PrjGroups addPrjGroups = new PrjGroups(Utils.encodeCredentials(username, password), instance, project, jiraProjectKey);
             addPrjGroups.sendRequest();
             Utils.print("Done!");
 

@@ -9,7 +9,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AddPrjGroups implements RestActions {
+public class PrjGroups implements RestActions {
     private String basicAuth, instance, project, jiraProjectKey;
     private static Map<Integer, String> bodyValues;
 
@@ -24,7 +24,7 @@ public class AddPrjGroups implements RestActions {
         bodyValues.put(10405, "users");
     }
 
-    public AddPrjGroups(String basicAuth, String instance, String project, String jiraProjectKey) {
+    public PrjGroups(String basicAuth, String instance, String project, String jiraProjectKey) {
         this.basicAuth = basicAuth;
         this.instance = instance;
         this.project = project;
