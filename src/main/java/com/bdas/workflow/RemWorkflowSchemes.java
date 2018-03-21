@@ -13,10 +13,9 @@ public class RemWorkflowSchemes {
     private List<String> ids;
     private final static String path = "./workflow_scheme_ids.txt";
 
-    public RemWorkflowSchemes(String username, String password, String instance) {
+    public RemWorkflowSchemes(String basicAuth, String instance) {
         this.basicAuth = basicAuth;
         this.instance = instance;
-        basicAuth = "Basic " + Utils.encodeCredentials(username, password);
         ids = new ArrayList<>();
     }
 
@@ -37,14 +36,18 @@ public class RemWorkflowSchemes {
 
                 int status = httpCon.getResponseCode();
                 switch (status) {
-                    case 400: Utils.print("Status "+ status + ": requested scheme is active.");
-                    break;
-                    case 401: Utils.print("Status "+ status + ": there is no user or the user has not entered a websudo session.");
-                    break;
-                    case 404: Utils.print("Status "+ status + ": requested scheme does not exist.");
-                    break;
-                    default: Utils.print("Status "+ status + ": the scheme was deleted.");
-                    break;
+                    case 400:
+                        Utils.print("Status " + status + ": requested scheme is active.");
+                        break;
+                    case 401:
+                        Utils.print("Status " + status + ": there is no user or the user has not entered a websudo session.");
+                        break;
+                    case 404:
+                        Utils.print("Status " + status + ": requested scheme does not exist.");
+                        break;
+                    default:
+                        Utils.print("Status " + status + ": the scheme was deleted.");
+                        break;
                 }
 
             } catch (IOException e) {
