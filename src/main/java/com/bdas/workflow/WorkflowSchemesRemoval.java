@@ -9,12 +9,12 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RemWorkflowSchemes implements RestActions{
+public class WorkflowSchemesRemoval implements RestActions{
     private String basicAuth, instance;
     private List<String> ids;
     private final static String path = "./workflow_scheme_ids.txt";
 
-    public RemWorkflowSchemes(String basicAuth, String instance) {
+    public WorkflowSchemesRemoval(String basicAuth, String instance) {
         this.basicAuth = basicAuth;
         this.instance = instance;
         ids = new ArrayList<>();

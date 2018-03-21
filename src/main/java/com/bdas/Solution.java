@@ -7,9 +7,9 @@ import com.bdas.project.AddPrjGroups;
 import com.bdas.project.ProjectCreation;
 import com.bdas.reports.CustomFieldsReport;
 import com.bdas.reports.IssueTypesReport;
-import com.bdas.reports.ResolutionReport;
+import com.bdas.reports.ResolutionsReport;
 import com.bdas.reports.WorkflowStatusesReport;
-import com.bdas.workflow.RemWorkflowSchemes;
+import com.bdas.workflow.WorkflowSchemesRemoval;
 
 import java.io.IOException;
 import java.net.URI;
@@ -60,7 +60,7 @@ public class Solution {
                     break;
                 case "-r":
                     report = "Resolutions";
-                    ResolutionReport resolutionReport = new ResolutionReport(restClient, report, jiraServerUri.toString());
+                    ResolutionsReport resolutionReport = new ResolutionsReport(restClient, report, jiraServerUri.toString());
                     resolutionReport.write(resolutionReport.generateReport());
                     break;
                 default:
@@ -70,7 +70,7 @@ public class Solution {
 
         } else if (args.length == 2 && args[1].equals("-rws")) {
 
-            RemWorkflowSchemes rws = new RemWorkflowSchemes(Utils.encodeCredentials(username, password), instance);
+            WorkflowSchemesRemoval rws = new WorkflowSchemesRemoval(Utils.encodeCredentials(username, password), instance);
             rws.sendRequest();
 
         } else if (args.length == 3) {

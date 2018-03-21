@@ -10,8 +10,8 @@ import org.apache.poi.ss.usermodel.Workbook;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class ResolutionReport extends Report {
-    public ResolutionReport(JiraRestClient restClient, String reportName, String instance) {
+public class ResolutionsReport extends Report {
+    public ResolutionsReport(JiraRestClient restClient, String reportName, String instance) {
         super(restClient, reportName, instance);
     }
 
