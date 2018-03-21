@@ -78,7 +78,7 @@ public class Solution {
             String project = args[1].trim().toUpperCase();
             String jiraProjectKey = args[2].trim().toUpperCase();
             AddPrjGroups addPrjGroups = new AddPrjGroups(Utils.encodeCredentials(username, password), instance, project, jiraProjectKey);
-            addPrjGroups.add();
+            addPrjGroups.sendRequest();
 
         } else if (args.length == 6) {
 
@@ -90,11 +90,11 @@ public class Solution {
 
             Utils.print("Project creation...");
             ProjectCreation projectCreation = new ProjectCreation(Utils.encodeCredentials(username, password), args[0], jiraProjectKey, lead, args[4], args[5]);
-            Utils.print(projectCreation.createJiraProject());
+            projectCreation.sendRequest();
 
             Utils.print(String.format("Adding prj_%s groups...", project));
             AddPrjGroups addPrjGroups = new AddPrjGroups(Utils.encodeCredentials(username, password), instance, project, jiraProjectKey);
-            addPrjGroups.add();
+            addPrjGroups.sendRequest();
             Utils.print("Done!");
 
         } else showHelp();
