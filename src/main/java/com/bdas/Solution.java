@@ -3,13 +3,14 @@ package com.bdas;
 import com.atlassian.jira.rest.client.api.JiraRestClient;
 import com.atlassian.jira.rest.client.auth.BasicHttpAuthenticationHandler;
 import com.atlassian.jira.rest.client.internal.async.AsynchronousJiraRestClientFactory;
-import com.bdas.project.PrjGroups;
-import com.bdas.project.ProjectCreation;
-import com.bdas.reports.CustomFieldsReport;
-import com.bdas.reports.IssueTypesReport;
-import com.bdas.reports.ResolutionsReport;
-import com.bdas.reports.WorkflowStatusesReport;
-import com.bdas.workflow.WorkflowSchemesRemoval;
+import com.bdas.crowd.group.GroupMembershipUpdate;
+import com.bdas.jira.project.PrjGroups;
+import com.bdas.jira.project.ProjectCreation;
+import com.bdas.jira.reports.CustomFieldsReport;
+import com.bdas.jira.reports.IssueTypesReport;
+import com.bdas.jira.reports.ResolutionsReport;
+import com.bdas.jira.reports.WorkflowStatusesReport;
+import com.bdas.jira.workflow.WorkflowSchemesRemoval;
 
 import java.io.IOException;
 import java.net.URI;
@@ -18,16 +19,12 @@ import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 
 public class Solution {
-    private static String username;
-    private static String password;
-    private static final String version = "BDAS API Tool v.1.2.1";
+    private static String username, password, crowdApplicationUser, crowdApplicationPassword;
+    private static final String VERSION = "BDAS API Tool v.1.2.1";
+    private static final String FILENAME = "./input.txt";
 
     public static void main(String[] args) throws URISyntaxException, ExecutionException, InterruptedException, IOException {
-        if (args.length == 1 && args[0].equals("-version")) {
-            System.out.println(version);
-        } else if (args.length == 1 && args[0].equals("-help")) {
-            showHelp();
-        }
+
         loadProperties();
         String instance = args[0];
 
@@ -35,7 +32,11 @@ public class Solution {
             instance = instance + "/";
         }
 
-        if (args.length == 2 && !args[1].equals("-rws")) {
+        if (args.length == 1 && args[0].equals("-version")) {
+            Utils.print(VERSION);
+        } else if (args.length == 1 && args[0].equals("-help")) {
+            showHelp();
+        } else if (args.length == 2 && !args[1].equals("-rws")) {
             final AsynchronousJiraRestClientFactory factory = new AsynchronousJiraRestClientFactory();
             final URI jiraServerUri = new URI(instance);
             final BasicHttpAuthenticationHandler basicHttpAuthenticationHandler = new BasicHttpAuthenticationHandler(username, password);
@@ -63,23 +64,27 @@ public class Solution {
                     ResolutionsReport resolutionReport = new ResolutionsReport(restClient, report, jiraServerUri.toString());
                     resolutionReport.write(resolutionReport.generateReport());
                     break;
+                case "-rws":
+                    WorkflowSchemesRemoval rws = new WorkflowSchemesRemoval(Utils.encodeCredentials(username, password), instance, FILENAME);
+                    rws.sendRequest();
+                    break;
                 default:
                     showHelp();
                     break;
             }
 
-        } else if (args.length == 2 && args[1].equals("-rws")) {
-
-            WorkflowSchemesRemoval rws = new WorkflowSchemesRemoval(Utils.encodeCredentials(username, password), instance);
-            rws.sendRequest();
-
         } else if (args.length == 3) {
-
-            String project = args[1].trim().toUpperCase();
-            String jiraProjectKey = args[2].trim().toUpperCase();
-            PrjGroups addPrjGroups = new PrjGroups(Utils.encodeCredentials(username, password), instance, project, jiraProjectKey);
-            addPrjGroups.sendRequest();
-
+            switch (args[2]) {
+                case "-gmu":
+                    GroupMembershipUpdate groupMembershipUpdate = new GroupMembershipUpdate(Utils.encodeCredentials(crowdApplicationUser, crowdApplicationPassword), instance, args[2], FILENAME);
+                    groupMembershipUpdate.sendRequest();
+                    break;
+                default:
+                    String project = args[1].trim().toUpperCase();
+                    String jiraProjectKey = args[2].trim().toUpperCase();
+                    PrjGroups addPrjGroups = new PrjGroups(Utils.encodeCredentials(username, password), instance, project, jiraProjectKey);
+                    addPrjGroups.sendRequest();
+                }
         } else if (args.length == 6) {
 
             String project = args[1].trim().toUpperCase();
@@ -111,6 +116,8 @@ public class Solution {
 
         username = prop.getProperty("username");
         password = prop.getProperty("password");
+        crowdApplicationUser = prop.getProperty("crowd.application.user");
+        crowdApplicationPassword = prop.getProperty("crowd.application.password");
     }
 
     private static void showHelp() {
@@ -121,10 +128,9 @@ public class Solution {
         Utils.print("[JIRA URL] -ws - generates workflow statuses report;");
         Utils.print("[JIRA URL] -cf - generates custom fields report;");
         Utils.print("[JIRA URL] -r - generates resolutions report;");
-        Utils.print("[JIRA URL] -rws - Delete the passed workflow schemes. Pass them to workflow_scheme_ids.txt file in the same dir as .jar file;");
+        Utils.print("[JIRA URL] -rws - Delete the passed workflow schemes. Pass them to input.txt file in the same dir as .jar file;");
         Utils.print("[JIRA URL] [project] [JIRA project key] - adding prj_ groups");
-        Utils.print("[JIRA URL] [project] [JIRA project key] [JIRA project name] [Lead] [Project Template ID] - project creation and adding prj_ groups");
+        Utils.print("[JIRA URL] [project] [JIRA project key] [JIRA project name] [Lead] [Project Template ID] - project creation and adding prj_ groups;");
+        Utils.print("[CROWD URL] [group name] -gmu - add usernames from input.txt file (should be located in the same dir as .jar file);");
     }
 }
-
-

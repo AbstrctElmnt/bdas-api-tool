@@ -1,4 +1,4 @@
-package com.bdas.reports;
+package com.bdas.jira.reports;
 
 import com.atlassian.jira.rest.client.api.JiraRestClient;
 import com.atlassian.jira.rest.client.api.domain.Field;

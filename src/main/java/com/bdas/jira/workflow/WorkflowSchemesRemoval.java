@@ -1,4 +1,4 @@
-package com.bdas.workflow;
+package com.bdas.jira.workflow;
 
 import com.bdas.RestActions;
 import com.bdas.Utils;
@@ -6,23 +6,21 @@ import com.bdas.Utils;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 public class WorkflowSchemesRemoval implements RestActions{
     private String basicAuth, instance;
-    private List<String> ids;
-    private final static String path = "./workflow_scheme_ids.txt";
+    private Set<String> ids;
 
-    public WorkflowSchemesRemoval(String basicAuth, String instance) {
+
+    public WorkflowSchemesRemoval(String basicAuth, String instance, String file) {
         this.basicAuth = basicAuth;
         this.instance = instance;
-        ids = new ArrayList<>();
+        ids = loadData(file);
     }
 
     @Override
     public void sendRequest() {
-        loadIds(ids);
         Utils.print("Total items for removal: " + ids.size());
 
         ids.forEach((id) -> {
@@ -58,16 +56,4 @@ public class WorkflowSchemesRemoval implements RestActions{
         });
     }
 
-    private void loadIds(List<String> list) {
-        try {
-            String idLine = null;
-            FileInputStream fis = new FileInputStream(path);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(fis));
-            while ((idLine = reader.readLine()) != null) {
-                list.add(idLine.trim());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }

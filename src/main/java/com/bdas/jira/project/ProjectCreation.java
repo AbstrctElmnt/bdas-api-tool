@@ -1,4 +1,4 @@
-package com.bdas.project;
+package com.bdas.jira.project;
 
 import com.bdas.RestActions;
 import com.bdas.Utils;
