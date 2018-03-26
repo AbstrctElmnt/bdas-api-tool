@@ -1,4 +1,4 @@
-package com.bdas.crowd.group;
+package com.bdas.crowd.groups;
 
 import com.bdas.RestActions;
 import com.bdas.Utils;
@@ -13,11 +13,11 @@ public class GroupMembershipUpdate implements RestActions{
     private String basicAuth, instance, group;
     private Set<String> usernames;
 
-    public GroupMembershipUpdate(String basicAuth, String instance, String group, String file) {
+    public GroupMembershipUpdate(String basicAuth, String instance, String group) {
         this.basicAuth = basicAuth;
         this.instance = instance;
         this.group = group;
-        this.usernames = loadData(file);
+        this.usernames = loadData();
     }
 
     @Override
@@ -27,7 +27,7 @@ public class GroupMembershipUpdate implements RestActions{
         usernames.forEach((username) -> {
             try {
                 Utils.print("Processing user: " + username);
-                String crowdUrl = String.format("%srest/usermanagement/latest/group/user/direct?groupname=%s", instance, group);
+                String crowdUrl = String.format("%srest/usermanagement/latest/groups/user/direct?groupname=%s", instance, group);
                 String body = String.format("{\"name\":\"%s\"}", username);
                 URL url = new URL(crowdUrl);
                 HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
@@ -47,15 +47,15 @@ public class GroupMembershipUpdate implements RestActions{
                         Utils.print(error);
                         break;
                     case 404:
-                        error = "Status " + status + ": the group could not be found.";
+                        error = "Status " + status + ": the groups could not be found.";
                         Utils.print(error);
                         break;
                     case 409:
-                        error = "Status " + status + ": the user is already a direct member of the group.";
+                        error = "Status " + status + ": the user is already a direct member of the groups.";
                         Utils.print(error);
                         break;
                     default:
-                        Utils.print("Status " + status + ": the user is successfully added as a member of the group.");
+                        Utils.print("Status " + status + ": the user is successfully added as a member of the groups.");
                         break;
                 }
                 httpCon.getInputStream();

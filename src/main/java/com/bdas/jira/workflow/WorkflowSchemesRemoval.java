@@ -12,11 +12,10 @@ public class WorkflowSchemesRemoval implements RestActions{
     private String basicAuth, instance;
     private Set<String> ids;
 
-
-    public WorkflowSchemesRemoval(String basicAuth, String instance, String file) {
+    public WorkflowSchemesRemoval(String basicAuth, String instance) {
         this.basicAuth = basicAuth;
         this.instance = instance;
-        ids = loadData(file);
+        ids = loadData();
     }
 
     @Override
@@ -49,11 +48,9 @@ public class WorkflowSchemesRemoval implements RestActions{
                         Utils.print("Status " + status + ": the scheme was deleted.");
                         break;
                 }
-
             } catch (IOException e) {
                 //e.printStackTrace();
             }
         });
     }
-
 }

@@ -3,7 +3,7 @@ package com.bdas;
 import com.atlassian.jira.rest.client.api.JiraRestClient;
 import com.atlassian.jira.rest.client.auth.BasicHttpAuthenticationHandler;
 import com.atlassian.jira.rest.client.internal.async.AsynchronousJiraRestClientFactory;
-import com.bdas.crowd.group.GroupMembershipUpdate;
+import com.bdas.crowd.groups.GroupMembershipUpdate;
 import com.bdas.jira.project.PrjGroups;
 import com.bdas.jira.project.ProjectCreation;
 import com.bdas.jira.reports.CustomFieldsReport;
@@ -21,7 +21,7 @@ import java.util.concurrent.ExecutionException;
 public class Solution {
     private static String username, password, crowdApplicationUser, crowdApplicationPassword;
     private static final String VERSION = "BDAS API Tool v.1.2.1";
-    private static final String FILENAME = "./input.txt";
+
 
     public static void main(String[] args) throws URISyntaxException, ExecutionException, InterruptedException, IOException {
 
@@ -65,7 +65,7 @@ public class Solution {
                     resolutionReport.write(resolutionReport.generateReport());
                     break;
                 case "-rws":
-                    WorkflowSchemesRemoval rws = new WorkflowSchemesRemoval(Utils.encodeCredentials(username, password), instance, FILENAME);
+                    WorkflowSchemesRemoval rws = new WorkflowSchemesRemoval(Utils.encodeCredentials(username, password), instance);
                     rws.sendRequest();
                     break;
                 default:
@@ -76,7 +76,7 @@ public class Solution {
         } else if (args.length == 3) {
             switch (args[2]) {
                 case "-gmu":
-                    GroupMembershipUpdate groupMembershipUpdate = new GroupMembershipUpdate(Utils.encodeCredentials(crowdApplicationUser, crowdApplicationPassword), instance, args[2], FILENAME);
+                    GroupMembershipUpdate groupMembershipUpdate = new GroupMembershipUpdate(Utils.encodeCredentials(crowdApplicationUser, crowdApplicationPassword), instance, args[2]);
                     groupMembershipUpdate.sendRequest();
                     break;
                 default:
@@ -131,6 +131,6 @@ public class Solution {
         Utils.print("[JIRA URL] -rws - Delete the passed workflow schemes. Pass them to input.txt file in the same dir as .jar file;");
         Utils.print("[JIRA URL] [project] [JIRA project key] - adding prj_ groups");
         Utils.print("[JIRA URL] [project] [JIRA project key] [JIRA project name] [Lead] [Project Template ID] - project creation and adding prj_ groups;");
-        Utils.print("[CROWD URL] [group name] -gmu - add usernames from input.txt file (should be located in the same dir as .jar file);");
+        Utils.print("[CROWD URL] [groups name] -gmu - add usernames from input.txt file (should be located in the same dir as .jar file);");
     }
 }
