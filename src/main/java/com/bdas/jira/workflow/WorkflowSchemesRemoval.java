@@ -44,8 +44,11 @@ public class WorkflowSchemesRemoval implements RestActions{
                     case 404:
                         Utils.print("Status " + status + ": requested scheme does not exist.");
                         break;
-                    default:
+                    case 204:
                         Utils.print("Status " + status + ": the scheme was deleted.");
+                        break;
+                    default:
+                        Utils.print("Nothing happened. Check settings!");
                         break;
                 }
             } catch (IOException e) {

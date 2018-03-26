@@ -27,7 +27,7 @@ public class GroupMembershipUpdate implements RestActions{
         usernames.forEach((username) -> {
             try {
                 Utils.print("Processing user: " + username);
-                String crowdUrl = String.format("%srest/usermanagement/latest/groups/user/direct?groupname=%s", instance, group);
+                String crowdUrl = String.format("%srest/usermanagement/latest/group/user/direct?groupname=%s", instance, group);
                 String body = String.format("{\"name\":\"%s\"}", username);
                 URL url = new URL(crowdUrl);
                 HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
@@ -47,15 +47,18 @@ public class GroupMembershipUpdate implements RestActions{
                         Utils.print(error);
                         break;
                     case 404:
-                        error = "Status " + status + ": the groups could not be found.";
+                        error = "Status " + status + ": the group could not be found.";
                         Utils.print(error);
                         break;
                     case 409:
                         error = "Status " + status + ": the user is already a direct member of the group.";
                         Utils.print(error);
                         break;
-                    default:
+                    case 201:
                         Utils.print("Status " + status + ": the user is successfully added as a member of the groups.");
+                        break;
+                    default:
+                        Utils.print("Nothing happened. Check settings!");
                         break;
                 }
                 httpCon.getInputStream();

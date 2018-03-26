@@ -76,7 +76,7 @@ public class Solution {
         } else if (args.length == 3) {
             switch (args[2]) {
                 case "-gmu":
-                    GroupMembershipUpdate groupMembershipUpdate = new GroupMembershipUpdate(Utils.encodeCredentials(crowdApplicationUser, crowdApplicationPassword), instance, args[2]);
+                    GroupMembershipUpdate groupMembershipUpdate = new GroupMembershipUpdate(Utils.encodeCredentials(crowdApplicationUser, crowdApplicationPassword), instance, args[1]);
                     groupMembershipUpdate.sendRequest();
                     break;
                 default:
