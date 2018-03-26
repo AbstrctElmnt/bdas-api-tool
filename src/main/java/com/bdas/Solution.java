@@ -36,7 +36,7 @@ public class Solution {
             Utils.print(VERSION);
         } else if (args.length == 1 && args[0].equals("-help")) {
             showHelp();
-        } else if (args.length == 2 && !args[1].equals("-rws")) {
+        } else if (args.length == 2) {
             final AsynchronousJiraRestClientFactory factory = new AsynchronousJiraRestClientFactory();
             final URI jiraServerUri = new URI(instance);
             final BasicHttpAuthenticationHandler basicHttpAuthenticationHandler = new BasicHttpAuthenticationHandler(username, password);
