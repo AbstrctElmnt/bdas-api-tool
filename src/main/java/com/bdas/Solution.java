@@ -20,7 +20,7 @@ import java.util.concurrent.ExecutionException;
 
 public class Solution {
     private static String username, password, crowdApplicationUser, crowdApplicationPassword;
-    private static final String VERSION = "BDAS API Tool v.1.2.1";
+    private static final String VERSION = "BDAS API Tool v.1.3";
 
 
     public static void main(String[] args) throws URISyntaxException, ExecutionException, InterruptedException, IOException {
