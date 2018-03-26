@@ -51,7 +51,7 @@ public class GroupMembershipUpdate implements RestActions{
                         Utils.print(error);
                         break;
                     case 409:
-                        error = "Status " + status + ": the user is already a direct member of the groups.";
+                        error = "Status " + status + ": the user is already a direct member of the group.";
                         Utils.print(error);
                         break;
                     default:
