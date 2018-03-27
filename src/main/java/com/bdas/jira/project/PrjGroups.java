@@ -35,7 +35,7 @@ public class PrjGroups implements RestActions {
     public void sendRequest() {
         bodyValues.forEach((id, role) -> {
             try {
-                String body = String.format("{\"groups\" : [\"prj_%s-%s\"]}", project, role);
+                String body = String.format("{\"group\" : [\"prj_%s-%s\"]}", project, role);
                 String jiraUrl = String.format("%srest/api/latest/project/%s/role/%d", instance, jiraProjectKey, id);
                 URL url = new URL(jiraUrl);
                 HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();

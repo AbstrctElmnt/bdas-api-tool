@@ -89,12 +89,14 @@ public class Solution {
 
             String project = args[1].trim().toUpperCase();
             String jiraProjectKey = args[2].trim().toUpperCase();
-            String lead = args[3];
+            String jiraProjectName = args[3].trim();
 
+            String lead = args[4];
             if (lead.length() > 20) lead = lead.substring(0, 20);
 
+
             Utils.print("Project creation...");
-            ProjectCreation projectCreation = new ProjectCreation(Utils.encodeCredentials(username, password), args[0], jiraProjectKey, lead, args[4], args[5]);
+            ProjectCreation projectCreation = new ProjectCreation(Utils.encodeCredentials(username, password), args[0], jiraProjectKey, jiraProjectName, lead, args[5]);
             projectCreation.sendRequest();
 
             Utils.print(String.format("Adding prj_%s groups...", project));
